@@ -1,7 +1,6 @@
 import { EventChart } from "@/app/EventChart";
 import { IEvent, IEventsConfig } from "@/app/types/IEvent";
 import { parseEvent } from "@/app/utils/parse";
-import { Chart } from "chart.js";
 import React from "react";
 
 export default async function Home()
