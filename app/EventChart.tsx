@@ -40,6 +40,7 @@ export function EventChart(props: { events: IEvent[] })
               plugins: {
                 legend: {
                   position: 'top',
+                  display: false
                 },
                 title: {
                   display: true,
