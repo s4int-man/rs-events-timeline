@@ -13,7 +13,6 @@ export function EventChart(props: { events: IEvent[] })
 {
     const ref = React.useRef<HTMLCanvasElement>(null);
 
-    console.log(props.events);
     // const labels: string[] = props.events.map(event => event.type + (event.subtype != null ? " (" + event.subtype + ")" : ""));
     // const labels: string[] = props.events.map(event => event.type);
 
