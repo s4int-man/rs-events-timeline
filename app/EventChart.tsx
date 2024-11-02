@@ -7,7 +7,7 @@ import { tomorrow, yesterday } from "@/app/utils/parse";
 import { IEvent } from "@/app/types/IEvent";
 
 Chart.register(...registerables);
-const colors = [ "#425E17", "#324AB2", "#FFCA86", "#53377A", "#00677E", "#531A50", "#CD9575", "#78DBE2", "#32CD32", "#90EE90", "#FAEEDD", "#48D1CC", "#297a42", ];
+const colors = [ "#425E17", "#324AB2", "#FFCA86", "#53377A", "#00677E", "#531A50", "#CD9575", "#78DBE2", "#32CD32", "#90EE90", "#FAEEDD", "#48D1CC", "#297a42", "#FFFF99", "#BEF574", "#E34234", "#34C924", "#F39F18", "#87CEFA" ];
 
 export function EventChart(props: { events: IEvent[] })
 {
