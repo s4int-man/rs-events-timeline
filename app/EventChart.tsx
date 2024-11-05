@@ -7,82 +7,79 @@ import { tomorrow, yesterday } from "@/app/utils/parse";
 import { IEvent } from "@/app/types/IEvent";
 
 Chart.register(...registerables);
-const colors = [ "#425E17", "#324AB2", "#FFCA86", "#53377A", "#00677E", "#531A50", "#CD9575", "#78DBE2", "#32CD32", "#90EE90", "#FAEEDD", "#48D1CC", "#297a42", "#FFFF99", "#BEF574", "#E34234", "#34C924", "#F39F18", "#87CEFA" ];
+const colors = ["#425E17", "#324AB2", "#FFCA86", "#53377A", "#00677E", "#531A50", "#CD9575", "#78DBE2", "#32CD32", "#90EE90", "#FAEEDD", "#48D1CC", "#297a42", "#FFFF99", "#BEF574", "#E34234", "#34C924", "#F39F18", "#87CEFA"];
 
-export function EventChart(props: { events: IEvent[] })
-{
-    const ref = React.useRef<HTMLCanvasElement>(null);
+export function EventChart(props: { events: IEvent[] }) {
+	const ref = React.useRef<HTMLCanvasElement>(null);
 
-    // const labels: string[] = props.events.map(event => event.type + (event.subtype != null ? " (" + event.subtype + ")" : ""));
-    // const labels: string[] = props.events.map(event => event.type);
+	// const labels: string[] = props.events.map(event => event.type + (event.subtype != null ? " (" + event.subtype + ")" : ""));
+	// const labels: string[] = props.events.map(event => event.type);
 
-    const datasets = props.events.map((event, index) => ({
-        label: event.type + (event.subtype != null ? " (" + event.subtype + ")" : ""),
-        data: {[event.type + (event.subtype != null ? " (" + event.subtype + ")" : "")]: [event.start, event.finish]},
-        backgroundColor: colors[index] ?? "red",
-    }));
-	
-    React.useEffect(() =>
-    {
-        if (ref.current === null)
-            return;
+	const datasets = props.events.map((event, index) => ({
+		label: event.type + (event.subtype != null ? " (" + event.subtype + ")" : ""),
+		data: { [event.type + (event.subtype != null ? " (" + event.subtype + ")" : "")]: [event.start, event.finish] },
+		backgroundColor: colors[index] ?? "red",
+	}));
 
-        const ctx = ref.current.getContext('2d')!;
+	React.useEffect(() => {
+		if (ref.current === null)
+			return;
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-              datasets
-            },
-            options: {
-              responsive: false,
-              indexAxis: 'y',
-              plugins: {
-                legend: {
-                  position: 'top',
-                  display: false
-                },
-                title: {
-                  display: true,
-                  text: 'График включения игровых событий'
-                },
-                tooltip: {
-                  callbacks: {
-                    beforeLabel: (item) => {
-                      return "Начало: " + new Date((item.parsed["_custom"] as { start: number }).start).toLocaleString()
-                    },
-                    label: () => "",
-                    afterLabel: (item) => {
-                      return "Конец: " + new Date((item.parsed["_custom"] as { end: number }).end).toLocaleString()
-                    }
-                    // label: (item) => "Конец: " + new Date(item.parsed.x).toLocaleString()
-                  }
-                }
-              },
-              scales: {
-                y: {
-                  stacked: true
-                },
-                x: {
-                  type: 'time',
-                  time: {
-                    // Luxon format string
-                    parser: 'dd/MM/yyyy HH:mm:ss',
-                    unit: "hour",
-                    tooltipFormat: 'DD T',
-                    displayFormats: {
-                        'hour': "dd/MM/yyyy HH:mm:ss"
-                    },
-                  },
-                  min: yesterday,
-                  max: tomorrow
-                }
-              }
-            }
-          });
-    }, [ datasets ]);
+		const ctx = ref.current.getContext('2d')!;
 
-    return <div className="chart-view">
-        <canvas id="chart" width="1850" height="500" ref={ref} />
-    </div>;
+		new Chart(ctx, {
+			type: 'bar',
+			data: {
+				datasets
+			},
+			options: {
+				responsive: false,
+				indexAxis: 'y',
+				plugins: {
+					legend: {
+						position: 'top',
+						display: false
+					},
+					title: {
+						display: true,
+						text: 'График включения игровых событий'
+					},
+					tooltip: {
+						callbacks: {
+							beforeLabel: (item) => {
+								return "Начало: " + new Date((item.parsed["_custom"] as { start: number }).start).toLocaleString()
+							},
+							label: () => "",
+							afterLabel: (item) => {
+								return "Конец: " + new Date((item.parsed["_custom"] as { end: number }).end).toLocaleString()
+							}
+						}
+					}
+				},
+				scales: {
+					y: {
+						stacked: true
+					},
+					x: {
+						type: 'time',
+						time: {
+							// Luxon format string
+							parser: 'dd/MM/yyyy HH:mm:ss',
+							unit: "hour",
+							tooltipFormat: 'DD T',
+							displayFormats: {
+								'hour': "dd/MM/yyyy HH:mm:ss"
+							},
+						},
+						min: yesterday,
+						max: tomorrow
+					}
+				}
+			}
+		});
+	}, [datasets]);
+
+	return <div className="chart-view">
+		<canvas id="chart" width="1850" height="500" ref={ref} />
+	</div>;
 }
