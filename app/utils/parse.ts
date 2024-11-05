@@ -1,7 +1,7 @@
 import { IEvent, IEventRaw } from "@/app/types/IEvent";
 
-export const yesterday = new Date().setDate(new Date().getDate() - 3);
-export const tomorrow = new Date().setDate(new Date().getDate() + 3);
+export const yesterday = new Date().setDate(new Date().getDate() - 1);
+export const tomorrow = new Date().setDate(new Date().getDate() + 7);
 
 export function parseEvent(data: IEventRaw): IEvent | null
 {

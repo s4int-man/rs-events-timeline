@@ -45,6 +45,18 @@ export function EventChart(props: { events: IEvent[] })
                 title: {
                   display: true,
                   text: 'График включения игровых событий'
+                },
+                tooltip: {
+                  callbacks: {
+                    beforeLabel: (item) => {
+                      return "Начало: " + new Date((item.parsed["_custom"] as { start: number }).start).toLocaleString()
+                    },
+                    label: () => "",
+                    afterLabel: (item) => {
+                      return "Конец: " + new Date((item.parsed["_custom"] as { end: number }).end).toLocaleString()
+                    }
+                    // label: (item) => "Конец: " + new Date(item.parsed.x).toLocaleString()
+                  }
                 }
               },
               scales: {
@@ -55,9 +67,12 @@ export function EventChart(props: { events: IEvent[] })
                   type: 'time',
                   time: {
                     // Luxon format string
-                    parser: 'MM/DD/YYYY HH:mm',
-                    tooltipFormat: 'll HH:mm',
-                    unit: "hour"
+                    parser: 'dd/MM/yyyy HH:mm:ss',
+                    unit: "hour",
+                    tooltipFormat: 'DD T',
+                    displayFormats: {
+                        'hour': "dd/MM/yyyy HH:mm:ss"
+                    },
                   },
                   min: yesterday,
                   max: tomorrow
@@ -68,6 +83,6 @@ export function EventChart(props: { events: IEvent[] })
     }, [ datasets ]);
 
     return <div className="chart-view">
-        <canvas id="chart" width="1000" height="500" ref={ref} />
+        <canvas id="chart" width="1850" height="500" ref={ref} />
     </div>;
 }
