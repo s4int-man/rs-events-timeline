@@ -48,11 +48,13 @@ export function EventChart(props: { events: IEvent[] }) {
 					tooltip: {
 						callbacks: {
 							beforeLabel: (item) => {
-								return "Начало: " + new Date((item.parsed["_custom"] as { start: number }).start)
+								const start = (item.parsed["_custom"] as { start: number }).start;
+								return "Начало: " + new Date(start) + "; " + start;
 							},
 							label: () => "",
 							afterLabel: (item) => {
-								return "Конец: " + new Date((item.parsed["_custom"] as { end: number }).end)
+								const end = (item.parsed["_custom"] as { end: number }).end;
+								return "Конец: " + new Date(end) + "; " + end;
 							}
 						}
 					},
