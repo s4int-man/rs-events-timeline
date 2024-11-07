@@ -14,7 +14,7 @@ const colorTypeMap = new Map<string, string>();
 colorTypeMap.set("offers/chain/24", "#414BB2");
 colorTypeMap.set("offers/chain/25", "#FAC710");
 colorTypeMap.set("offers/one_plus_one", "#8FD14F");
-colorTypeMap.set("double_offer_reward", "#8FD14F");
+colorTypeMap.set("double_offer_reward", "#FCD858");
 colorTypeMap.set("passion_pass", "#DA0063");
 colorTypeMap.set("club_competition_reward", "#2D9BF0");
 colorTypeMap.set("gifts_half_price", "#626ABC");
