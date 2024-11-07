@@ -49,12 +49,12 @@ export function EventChart(props: { events: IEvent[] }) {
 						callbacks: {
 							beforeLabel: (item) => {
 								const start = (item.parsed["_custom"] as { start: number }).start;
-								return "Начало: " + new Date(start) + "; " + start;
+								return "Начало: " + new Date(start);
 							},
 							label: () => "",
 							afterLabel: (item) => {
 								const end = (item.parsed["_custom"] as { end: number }).end;
-								return "Конец: " + new Date(end) + "; " + end;
+								return "Конец: " + new Date(end);
 							}
 						}
 					},
