@@ -20,6 +20,7 @@ colorTypeMap.set("gifts_half_price", "#626ABC");
 colorTypeMap.set("ghost_hunt", "#7F51BD");
 colorTypeMap.set("candy_shop", "#7F51BD");
 colorTypeMap.set("leaderboard/ghost_hunt", "#7F51BD");
+colorTypeMap.set("gift_league_points/happy_hours", "#2D9BF0");
 
 
 export function EventChart(props: { events: IEvent[] })
