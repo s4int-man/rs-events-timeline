@@ -14,6 +14,7 @@ const colorTypeMap = new Map<string, string>();
 colorTypeMap.set("offers/chain/24", "#414BB2");
 colorTypeMap.set("offers/chain/25", "#FAC710");
 colorTypeMap.set("offers/one_plus_one", "#8FD14F");
+colorTypeMap.set("double_offer_reward", "#8FD14F");
 colorTypeMap.set("passion_pass", "#DA0063");
 colorTypeMap.set("club_competition_reward", "#2D9BF0");
 colorTypeMap.set("gifts_half_price", "#626ABC");
@@ -21,6 +22,7 @@ colorTypeMap.set("ghost_hunt", "#7F51BD");
 colorTypeMap.set("candy_shop", "#7F51BD");
 colorTypeMap.set("leaderboard/ghost_hunt", "#7F51BD");
 colorTypeMap.set("gift_league_points/happy_hours", "#2D9BF0");
+
 
 
 export function EventChart(props: { events: IEvent[] })
