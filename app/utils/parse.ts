@@ -5,8 +5,10 @@ export const tomorrow = new Date().setDate(new Date().getDate() + 7);
 
 export function parseEvent(data: IEventRaw): IEvent | null
 {
-    const start: number = Date.parse(data.start);
-    const finish: number = Date.parse(data.finish);
+    const start: number = Date.parse(data.start + "+03:00");
+    const finish: number = Date.parse(data.finish + "+03:00");
+
+    console.log(start, finish, "BY UTC");
 
     if (finish < yesterday)
         return null;
