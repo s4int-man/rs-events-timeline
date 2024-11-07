@@ -3,18 +3,16 @@
 import { Chart, registerables } from "chart.js";
 import React from "react";
 import 'chartjs-adapter-date-fns';
-import "chartjs-plugin-annotation";
+import annotationPlugin from 'chartjs-plugin-annotation';
 import { tomorrow, yesterday } from "@/app/utils/parse";
 import { IEvent } from "@/app/types/IEvent";
 
-Chart.register(...registerables);
+Chart.register(...registerables, annotationPlugin);
 const colors = ["#425E17", "#324AB2", "#FFCA86", "#53377A", "#00677E", "#531A50", "#CD9575", "#78DBE2", "#32CD32", "#90EE90", "#FAEEDD", "#48D1CC", "#297a42", "#FFFF99", "#BEF574", "#E34234", "#34C924", "#F39F18", "#87CEFA"];
 
-export function EventChart(props: { events: IEvent[] }) {
+export function EventChart(props: { events: IEvent[] })
+{
 	const ref = React.useRef<HTMLCanvasElement>(null);
-
-	// const labels: string[] = props.events.map(event => event.type + (event.subtype != null ? " (" + event.subtype + ")" : ""));
-	// const labels: string[] = props.events.map(event => event.type);
 
 	const datasets = props.events.map((event, index) => ({
 		label: event.type + (event.subtype != null ? " (" + event.subtype + ")" : ""),
@@ -22,11 +20,12 @@ export function EventChart(props: { events: IEvent[] }) {
 		backgroundColor: colors[index] ?? "red",
 	}));
 
-	React.useEffect(() => {
+	React.useEffect((): void =>
+	{
 		if (ref.current === null)
 			return;
 
-		const ctx = ref.current.getContext('2d')!;
+		const ctx: CanvasRenderingContext2D = ref.current.getContext('2d') as CanvasRenderingContext2D;
 
 		new Chart(ctx, {
 			type: 'bar',
@@ -65,7 +64,7 @@ export function EventChart(props: { events: IEvent[] }) {
 								scaleID: 'x',
 								value: Date.now(),
 								borderColor: 'red',
-								borderWidth: 2
+								borderWidth: 2,
 							}
 						}
 					}
@@ -92,6 +91,8 @@ export function EventChart(props: { events: IEvent[] }) {
 			}
 		});
 	}, [datasets]);
+
+	console.log(yesterday, tomorrow);
 
 	return <div className="chart-view">
 		<canvas id="chart" width="1850" height="500" ref={ref} />
