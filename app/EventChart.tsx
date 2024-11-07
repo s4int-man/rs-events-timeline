@@ -10,15 +10,32 @@ import { IEvent } from "@/app/types/IEvent";
 Chart.register(...registerables, annotationPlugin);
 const colors = ["#425E17", "#324AB2", "#FFCA86", "#53377A", "#00677E", "#531A50", "#CD9575", "#78DBE2", "#32CD32", "#90EE90", "#FAEEDD", "#48D1CC", "#297a42", "#FFFF99", "#BEF574", "#E34234", "#34C924", "#F39F18", "#87CEFA"];
 
+const colorTypeMap = new Map<string, string>();
+colorTypeMap.set("offers/chain/24", "#414BB2");
+colorTypeMap.set("offers/chain/25", "#FAC710");
+colorTypeMap.set("offers/one_plus_one", "#8FD14F");
+colorTypeMap.set("passion_pass", "#DA0063");
+colorTypeMap.set("club_competition_reward", "#2D9BF0");
+colorTypeMap.set("gifts_half_price", "#626ABC");
+colorTypeMap.set("ghost_hunt", "#7F51BD");
+colorTypeMap.set("candy_shop", "#7F51BD");
+colorTypeMap.set("leaderboard/ghost_hunt", "#7F51BD");
+
+
 export function EventChart(props: { events: IEvent[] })
 {
 	const ref = React.useRef<HTMLCanvasElement>(null);
 
-	const datasets = props.events.map((event, index) => ({
-		label: event.type + (event.subtype != null ? " (" + event.subtype + ")" : ""),
-		data: { [event.type + (event.subtype != null ? " (" + event.subtype + ")" : "")]: [event.start, event.finish] },
-		backgroundColor: colors[index] ?? "red",
-	}));
+	const datasets = props.events.map((event, index) =>
+	{
+		const eventId: string = event.type + (event.subtype != null ? "/" + event.subtype : "") + (event.v != null ? "/" + event.v : "");
+
+		return {
+			label: eventId,
+			data: { [eventId]: [event.start, event.finish] },
+			backgroundColor: colorTypeMap.has(eventId) ? colorTypeMap.get(eventId) : colors[index] ?? "red",
+		};
+	});
 
 	React.useEffect((): void =>
 	{
@@ -91,8 +108,6 @@ export function EventChart(props: { events: IEvent[] })
 			}
 		});
 	}, [datasets]);
-
-	console.log(yesterday, tomorrow);
 
 	return <div className="chart-view">
 		<canvas id="chart" width="1850" height="500" ref={ref} />

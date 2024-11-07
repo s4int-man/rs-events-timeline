@@ -4,6 +4,7 @@ export interface IEventRaw
     finish: string;
     type: string;
     subtype?: string;
+    v?: number;
 }
 
 export interface IEvent
@@ -12,6 +13,7 @@ export interface IEvent
     finish: Date;
     type: string; // Потом указать объединение
     subtype?: string;
+    v?: number;
 }
 
 export interface IEventsConfig

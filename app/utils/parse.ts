@@ -18,6 +18,7 @@ export function parseEvent(data: IEventRaw): IEvent | null
         start: new Date(start), 
         finish: new Date(finish),
         type: data.type,
-        subtype: data.subtype
+        subtype: data.subtype,
+        v: data.v
     };
 }
