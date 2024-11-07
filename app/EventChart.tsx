@@ -3,6 +3,7 @@
 import { Chart, registerables } from "chart.js";
 import React from "react";
 import 'chartjs-adapter-date-fns';
+import "chartjs-plugin-annotation";
 import { tomorrow, yesterday } from "@/app/utils/parse";
 import { IEvent } from "@/app/types/IEvent";
 
@@ -47,11 +48,22 @@ export function EventChart(props: { events: IEvent[] }) {
 					tooltip: {
 						callbacks: {
 							beforeLabel: (item) => {
-								return "Начало: " + new Date((item.parsed["_custom"] as { start: number }).start).toLocaleString()
+								return "Начало: " + new Date((item.parsed["_custom"] as { start: number }).start)
 							},
 							label: () => "",
 							afterLabel: (item) => {
-								return "Конец: " + new Date((item.parsed["_custom"] as { end: number }).end).toLocaleString()
+								return "Конец: " + new Date((item.parsed["_custom"] as { end: number }).end)
+							}
+						}
+					},
+					annotation: {
+						annotations: {
+							"now": {
+								type: 'line',
+								scaleID: 'x',
+								value: Date.now(),
+								borderColor: 'red',
+								borderWidth: 2
 							}
 						}
 					}
