@@ -1,11 +1,11 @@
 "use client";
 
 import { Chart, registerables } from "chart.js";
-import React from "react";
+import React, { useState } from "react";
 import 'chartjs-adapter-date-fns';
 import annotationPlugin from 'chartjs-plugin-annotation';
-import { tomorrow, yesterday } from "@/app/utils/parse";
-import { IEvent } from "@/app/types/IEvent";
+import { parseEvent, tomorrow, yesterday } from "@/app/utils/parse";
+import { IEvent, IEventsConfig } from "@/app/types/IEvent";
 
 Chart.register(...registerables, annotationPlugin);
 const colors = ["#425E17", "#324AB2", "#FFCA86", "#53377A", "#00677E", "#531A50", "#CD9575", "#78DBE2", "#32CD32", "#90EE90", "#FAEEDD", "#48D1CC", "#297a42", "#FFFF99", "#BEF574", "#E34234", "#34C924", "#F39F18", "#87CEFA"];
@@ -23,11 +23,27 @@ colorTypeMap.set("candy_shop", "#7F51BD");
 colorTypeMap.set("leaderboard/ghost_hunt", "#7F51BD");
 colorTypeMap.set("gift_league_points/happy_hours", "#2D9BF0");
 
-export function EventChart(props: { events: IEvent[] })
+export function EventChart()
 {
+	const [ events, setEvents ] = useState<IEvent[]>([]);
+
 	const ref = React.useRef<HTMLCanvasElement>(null);
 
-	const datasets = props.events.map((event, index) =>
+	React.useEffect((): void =>
+	{
+		fetch("https://bottleconf.realcdn.ru/events.json?" + Date.now())
+		.then((response): Promise<IEventsConfig> => response.json())
+		.then((rs_config: IEventsConfig) =>
+		{
+			const events = rs_config.events
+				.map((data) => parseEvent(data))
+				.filter((event: IEvent | null): event is IEvent => !!event);
+
+			setEvents(events);
+		});
+	}, []);
+
+	const datasets = events.map((event, index) =>
 	{
 		const eventId: string = event.type + (event.subtype != null ? "/" + event.subtype : "") + (event.v != null ? "/" + event.v : "");
 
@@ -40,7 +56,7 @@ export function EventChart(props: { events: IEvent[] })
 
 	React.useEffect((): void =>
 	{
-		if (ref.current === null)
+		if (ref.current === null || events.length == 0)
 			return;
 
 		const ctx: CanvasRenderingContext2D = ref.current.getContext('2d') as CanvasRenderingContext2D;
